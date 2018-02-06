@@ -1,5 +1,5 @@
-#include "fw/src/mgos.h"
+#include "mgos.h"
 
-bool mgos_df_core_init(void) {
+bool mgos_mg_df_core_init(void) {
 	return true;
 }
