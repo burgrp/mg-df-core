@@ -39,5 +39,7 @@ let Register = {
 			name: name,
 			register: register
 		});
+
+		return register;
 	}
 };
