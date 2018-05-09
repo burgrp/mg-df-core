@@ -6,7 +6,10 @@ let RegisterConfig = {
             setCtor: setCtor,
 
             set: function set(value) {
-                Cfg.set(this.setCtor(value));
+                let actual = Cfg.get(this.key);
+                if (actual !== value) {
+                    Cfg.set(this.setCtor(value));
+                }
             },
 
             get: function () {
