@@ -1,9 +1,13 @@
 /* global Cfg, MQTT */
 
 load('api_mqtt.js');
+load("api_timer.js");
 
 let Register = {
-	add: function (name, register) {
+
+	all: {},
+
+	add: function (name, register, meta) {
 
 		let observer = {
 			name: name,
@@ -34,6 +38,27 @@ let Register = {
 				register: register
 			});
 
+		register.meta = meta || {};		
+		register.meta.device = Cfg.get("device.id");
+
+		this.all[name] = register;
+
 		return register;
+	},
+
+	advertise: function() {
+		for (let name in this.all) {
+			let register = this.all[name];
+			MQTT.pub("register/" + name + "/advertise", JSON.stringify(register.meta));
+		}
 	}
 };
+
+Timer.set(10000, Timer.REPEAT, function() {
+	Register.advertise();
+}, null);
+
+
+MQTT.sub("register/advertise!", function (conn, topic, msg, ctx) {
+	Register.advertise();
+}, null);
