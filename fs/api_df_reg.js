@@ -2,6 +2,7 @@
 
 load('api_mqtt.js');
 load("api_timer.js");
+load('api_config.js');
 
 let Register = {
 
