@@ -55,11 +55,6 @@ let Register = {
 	}
 };
 
-Timer.set(10000, Timer.REPEAT, function() {
-	Register.advertise();
-}, null);
-
-
 MQTT.sub("register/advertise!", function (conn, topic, msg, ctx) {
 	Register.advertise();
 }, null);
